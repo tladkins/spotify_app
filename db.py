@@ -1,8 +1,18 @@
 import psycopg2
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def get_connection():
-    return psycopg2.connect(os.getenv("DATABASE_URL"))
+
+    return psycopg2.connect(
+        host=os.getenv("DB_HOST"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        port=os.getenv("DB_PORT")
+    )
 
 
 def insert_track(track_name, artist, played_at, spotify_id):
@@ -20,4 +30,8 @@ def insert_track(track_name, artist, played_at, spotify_id):
     conn.commit()
 
     cur.close()
+    conn.close()
+if __name__ == "__main__":
+    conn = get_connection()
+    print("Connected!")
     conn.close()
