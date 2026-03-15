@@ -1,8 +1,9 @@
-import spotipy
 import os
+import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from db import insert_track
 from dotenv import load_dotenv
+from db import insert_track
+
 load_dotenv()
 
 scope = "user-read-recently-played"
