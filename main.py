@@ -1,0 +1,44 @@
+import spotipy
+import os
+from spotipy.oauth2 import SpotifyOAuth
+from db import create_table, insert_track
+from dotenv import load_dotenv
+load_dotenv()
+
+scope = "user-read-recently-played"
+
+sp = spotipy.Spotify(
+    auth_manager=SpotifyOAuth(
+        scope="user-read-recently-played",
+        client_id=os.getenv("SPOTIPY_CLIENT_ID"),
+        client_secret=os.getenv("SPOTIPY_CLIENT_SECRET"),
+        redirect_uri=os.getenv("SPOTIPY_REDIRECT_URI")
+    )
+)
+
+def fetch_recent_tracks():
+
+    results = sp.current_user_recently_played(limit=50)
+
+    for item in results['items']:
+
+        track = item['track']
+
+        track_name = track['name']
+        artist = track['artists'][0]['name']
+        played_at = item['played_at']
+        spotify_id = track['id']
+
+        insert_track(track_name, artist, played_at, spotify_id)
+
+        print(f"Saved: {track_name} - {artist}")
+
+
+def main():
+
+    create_table()
+    fetch_recent_tracks()
+
+
+if __name__ == "__main__":
+    main()
