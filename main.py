@@ -1,7 +1,7 @@
 import spotipy
 import os
 from spotipy.oauth2 import SpotifyOAuth
-from db import create_table, insert_track
+from db import insert_track
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -36,7 +36,6 @@ def fetch_recent_tracks():
 
 def main():
 
-    create_table()
     fetch_recent_tracks()
 
 
