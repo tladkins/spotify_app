@@ -31,7 +31,3 @@ def insert_track(track_name, artist, played_at, spotify_id):
 
     cur.close()
     conn.close()
-if __name__ == "__main__":
-    conn = get_connection()
-    print("Connected!")
-    conn.close()
