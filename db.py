@@ -21,13 +21,11 @@ def insert_track(track_name, artist, played_at, spotify_id):
     cur = conn.cursor()
 
     cur.execute("""
-        INSERT INTO listening_history
-        (track_name, artist, played_at, spotify_id)
+        INSERT INTO listening_history (track_name, artist, played_at, spotify_id)
         VALUES (%s, %s, %s, %s)
-        ON CONFLICT (spotify_id) DO NOTHING
+        ON CONFLICT (spotify_id, played_at) DO NOTHING
     """, (track_name, artist, played_at, spotify_id))
 
     conn.commit()
-
     cur.close()
     conn.close()
