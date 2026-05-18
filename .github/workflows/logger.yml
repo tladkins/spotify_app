@@ -41,3 +41,5 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_PORT: ${{ secrets.DB_PORT }}
         run: python main.py
+
+        ##dummy
